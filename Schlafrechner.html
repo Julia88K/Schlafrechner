@@ -1,0 +1,90 @@
+ 
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Schlafschuld Rechner</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: ivory;
+    }
+    label, input {
+      display: block;
+      margin-bottom: 20px;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px;
+      font-size: 16px;
+    }
+    #result {
+      margin-top: 20px;
+      font-weight: normal;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Schlafschuld-Rechner</h1>
+
+  <form id="sleepForm">
+    <label>Montag: <input type="number" name="day1" required></label>
+    <label>Dienstag: <input type="number" name="day2" required></label>
+    <label>Mittwoch: <input type="number" name="day3" required></label>
+    <label>Donnerstag: <input type="number" name="day4" required></label>
+    <label>Freitag: <input type="number" name="day5" required></label>
+    <label>Samstag: <input type="number" name="day6" required></label>
+    <label>Sonntag: <input type="number" name="day7" required></label>
+    <label>Deine ideale Schlafdauer pro Nacht (z. B. 8): <input type="number" id="idealHours" required></label>
+
+    <button type="submit">Berechne Schlafschuld</button>
+  </form>
+
+  <div id="result"></div>
+
+  <script>
+    function getActualSleepHours(day1, day2, day3, day4, day5, day6, day7) {
+      return day1 + day2 + day3 + day4 + day5 + day6 + day7;
+    }
+
+    function getIdealSleepHours(hours) {
+      return hours * 7;
+    }
+
+    function calculateSleepDebt(actualSleepHours, idealSleepHours) {
+      if (actualSleepHours === idealSleepHours) {
+        return "Du hast genau genug geschlafen. Gut gemacht!";
+      } else if (actualSleepHours > idealSleepHours) {
+        let surplus = actualSleepHours - idealSleepHours;
+        return `Du hast ${surplus} Stunden mehr geschlafen als nötig.`;
+      } else {
+        let debt = idealSleepHours - actualSleepHours;
+        return `Du solltest dich ausruhen. Deine Schlafschuld beträgt ${debt} Stunden.`;
+      }
+    }
+
+    document.getElementById("sleepForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const form = event.target;
+      const day1 = Number(form.day1.value);
+      const day2 = Number(form.day2.value);
+      const day3 = Number(form.day3.value);
+      const day4 = Number(form.day4.value);
+      const day5 = Number(form.day5.value);
+      const day6 = Number(form.day6.value);
+      const day7 = Number(form.day7.value);
+      const idealHours = Number(document.getElementById("idealHours").value);
+
+      const actual = getActualSleepHours(day1, day2, day3, day4, day5, day6, day7);
+      const ideal = getIdealSleepHours(idealHours);
+
+      const resultText = calculateSleepDebt(actual, ideal);
+      document.getElementById("result").textContent = resultText;
+    });
+  </script>
+
+</body>
+</html>
