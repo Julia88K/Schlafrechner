@@ -3,7 +3,7 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>Schlafschuld Rechner</title>
+  <title>Schlaf-Rechner</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -27,7 +27,7 @@
 </head>
 <body>
 
-  <h1>Schlafschuld-Rechner</h1>
+  <h1>Schlaf-Rechner</h1>
 
   <form id="sleepForm">
     <label>Montag: <input type="number" name="day1" required></label>
@@ -37,9 +37,9 @@
     <label>Freitag: <input type="number" name="day5" required></label>
     <label>Samstag: <input type="number" name="day6" required></label>
     <label>Sonntag: <input type="number" name="day7" required></label>
-    <label>Deine ideale Schlafdauer pro Nacht (z. B. 8): <input type="number" id="idealHours" required></label>
+    <label>Deine ideale Schlafdauer pro Nacht in Stunden (z. B. 8): <input type="number" id="idealHours" required></label>
 
-    <button type="submit">Berechne Schlafschuld</button>
+    <button type="submit">Berechne Schlafdefizit</button>
   </form>
 
   <div id="result"></div>
@@ -61,7 +61,7 @@
         return `Du hast ${surplus} Stunden mehr geschlafen als nötig.`;
       } else {
         let debt = idealSleepHours - actualSleepHours;
-        return `Du solltest dich ausruhen. Deine Schlafschuld beträgt ${debt} Stunden.`;
+        return `Du solltest dich ausruhen. Deine Schlafdefizit beträgt ${debt} Stunden.`;
       }
     }
 
