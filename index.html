@@ -31,12 +31,12 @@
 
   <form id="sleepForm">
     <label>Montag: <input type="number" id="day1" name="day1" min="0" max="24" required></label>
-    <label>Dienstag: <input type="number" id="day1" name="day1" min="0" max="24" required></label>
-    <label>Mittwoch: <input type="number" id="day1" name="day1" min="0" max="24" required></label>
-    <label>Donnerstag: <input type="number" id="day1" name="day1" min="0" max="24" required></label>
-    <label>Freitag: <input type="number" id="day1" name="day1" min="0" max="24" required></label>
-    <label>Samstag: <input type="number" id="day1" name="day1" min="0" max="24" required></label>
-    <label>Sonntag: <input type="number" id="day1" name="day1" min="0" max="24" required></label>
+    <label>Dienstag: <input type="number" id="day2" name="day2" min="0" max="24" required></label>
+    <label>Mittwoch: <input type="number" id="day3" name="day3" min="0" max="24" required></label>
+    <label>Donnerstag: <input type="number" id="day4" name="day4" min="0" max="24" required></label>
+    <label>Freitag: <input type="number" id="day5" name="day5" min="0" max="24" required></label>
+    <label>Samstag: <input type="number" id="day6" name="day6" min="0" max="24" required></label>
+    <label>Sonntag: <input type="number" id="day7" name="day7" min="0" max="24" required></label>
     <label>Deine ideale Schlafdauer pro Nacht in Stunden (z. B. 8): <input type="number" id="idealHours" name="idealHours" min="1" max="24" required></label>
 
     <button type="submit">Berechne Schlafdefizit</button>
@@ -59,7 +59,10 @@
       return `Tag ${i + 1}: Schlafzeit muss zwischen 0 und 24 Stunden liegen.`;
     }
      }
+  return day1 + day2 + day3 + day4 + day5 + day6 + day7
+  
     }
+     
     function getIdealSleepHours(hours) {
       return hours * 7;
     }
