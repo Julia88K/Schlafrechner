@@ -104,6 +104,10 @@
 
       const actual = getActualSleepHours(...values.slice(0, 7));
       const ideal = getIdealSleepHours(values[7]);
+     if (typeof actual !== "number") {
+  document.getElementById("result").textContent = actual; // Fehlermeldung anzeigen
+  return;
+     }
 
       const resultText = calculateSleepDebt(actual, ideal);
       document.getElementById("result").textContent = resultText;
