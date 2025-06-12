@@ -30,25 +30,36 @@
   <h1>Schlaf-Rechner</h1>
 
   <form id="sleepForm">
-    <label>Montag: <input type="number" name="day1" required></label>
-    <label>Dienstag: <input type="number" name="day2" required></label>
-    <label>Mittwoch: <input type="number" name="day3" required></label>
-    <label>Donnerstag: <input type="number" name="day4" required></label>
-    <label>Freitag: <input type="number" name="day5" required></label>
-    <label>Samstag: <input type="number" name="day6" required></label>
-    <label>Sonntag: <input type="number" name="day7" required></label>
-    <label>Deine ideale Schlafdauer pro Nacht in Stunden (z. B. 8): <input type="number" id="idealHours" required></label>
+    <label>Montag: <input type="number" id="day1" name="day1" min="0" max="24" required></label>
+    <label>Dienstag: <input type="number" id="day1" name="day1" min="0" max="24" required></label>
+    <label>Mittwoch: <input type="number" id="day1" name="day1" min="0" max="24" required></label>
+    <label>Donnerstag: <input type="number" id="day1" name="day1" min="0" max="24" required></label>
+    <label>Freitag: <input type="number" id="day1" name="day1" min="0" max="24" required></label>
+    <label>Samstag: <input type="number" id="day1" name="day1" min="0" max="24" required></label>
+    <label>Sonntag: <input type="number" id="day1" name="day1" min="0" max="24" required></label>
+    <label>Deine ideale Schlafdauer pro Nacht in Stunden (z. B. 8): <input type="number" id="idealHours" name="idealHours" min="1" max="24" required></label>
 
     <button type="submit">Berechne Schlafdefizit</button>
   </form>
 
-  <div id="result"></div>
+  <div id="error" style="color: red; margin-top: 10px;"></div>
+  <div id="result" style="margin-top: 10px;"></div>
 
   <script>
     function getActualSleepHours(day1, day2, day3, day4, day5, day6, day7) {
-      return day1 + day2 + day3 + day4 + day5 + day6 + day7;
-    }
+     const days = [day1, day2, day3, day4, day5, day6, day7];
 
+  for (let i = 0; i < days.length; i++) {
+    const day = days[i];
+   
+    if (isNaN(day)) {
+      return `Tag ${i + 1}: Bitte eine Zahl eingeben.`;
+    }
+    if (day < 0 || day > 24) {
+      return `Tag ${i + 1}: Schlafzeit muss zwischen 0 und 24 Stunden liegen.`;
+    }
+     }
+    }
     function getIdealSleepHours(hours) {
       return hours * 7;
     }
@@ -69,17 +80,27 @@
       event.preventDefault();
 
       const form = event.target;
-      const day1 = Number(form.day1.value);
-      const day2 = Number(form.day2.value);
-      const day3 = Number(form.day3.value);
-      const day4 = Number(form.day4.value);
-      const day5 = Number(form.day5.value);
-      const day6 = Number(form.day6.value);
-      const day7 = Number(form.day7.value);
-      const idealHours = Number(document.getElementById("idealHours").value);
+  const errorBox = document.getElementById("error");
+  errorBox.textContent = ""; // alte Fehlermeldungen löschen
 
-      const actual = getActualSleepHours(day1, day2, day3, day4, day5, day6, day7);
-      const ideal = getIdealSleepHours(idealHours);
+  const inputs = ["day1", "day2", "day3", "day4", "day5", "day6", "day7", "idealHours"];
+  const values = [];
+
+  for (let id of inputs) {
+    const value = Number(form[id].value);
+    if (isNaN(value)) {
+      errorBox.textContent = `Bitte gib für ${id} eine gültige Zahl ein.`;
+      return;
+    }
+    if (value < 0 || value > 24) {
+      errorBox.textContent = `Die Zahl für ${id} muss zwischen 0 und 24 liegen.`;
+      return;
+    }
+    values.push(value);
+  }
+
+      const actual = getActualSleepHours(...values.slice(0, 7));
+      const ideal = getIdealSleepHours(values[7]);
 
       const resultText = calculateSleepDebt(actual, ideal);
       document.getElementById("result").textContent = resultText;
